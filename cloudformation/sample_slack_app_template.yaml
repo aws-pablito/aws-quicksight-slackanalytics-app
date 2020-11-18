@@ -27,6 +27,8 @@ Resources:
           #!/bin/bash
           set -x
           exec > >(tee /var/log/user-data.log|logger -t user-data ) 2>&1
+          su ec2-user
+
           echo "1. Install nvm"
           curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
           . ~/.nvm/nvm.sh
@@ -41,8 +43,8 @@ Resources:
           git version
 
           echo "4. Download and deploy sample app from git"
-          cd /home/ec2-user/
-          git clone
+          cd ~/
+          git clone https://github.com/aws-pablito/aws-quicksight-slackanalytics.git
           cd aws-quicksight-slackanalytics/webapp
           npm install
 
