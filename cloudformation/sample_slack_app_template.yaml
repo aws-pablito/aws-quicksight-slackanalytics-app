@@ -1,0 +1,32 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Parameters:
+  SlackClientId:
+    Description: "Slack App Client ID"
+    Type: String
+  SlackClientSecret:
+    Description: "Slack App Secret Key"
+    Type: String
+  InstanceSSHKey:
+    Description: "SSH key to log into your instance for troubleshooting purposes"
+    Type: String
+Resources:
+  slackapp:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      ImageId: ami-09e7aedfda734b173
+      KeyName: !Ref InstanceSSHKey
+      BlockDeviceMappings:
+        - DeviceName: "/dev/sdm"
+          Ebs:
+            VolumeType: "io1"
+            Iops: "200"
+            DeleteOnTermination: "false"
+            VolumeSize: "20"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          set -x
+          exec > >(tee /var/log/user-data.log|logger -t user-data ) 2>&1
+
+          sudo mkdir /testing
