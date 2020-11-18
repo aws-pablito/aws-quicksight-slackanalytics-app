@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h4= 'Your AWS Secrets Manager secret:'
+  p
+  table(class='table')
+    tbody
+        tr
+          td='NAME:'
+          td=Name
+        tr
+          td='ARN:'
+          td=ARN
+        tr
+          td="VERSION:"
+          td=VersionId

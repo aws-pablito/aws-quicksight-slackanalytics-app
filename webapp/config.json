@@ -1,0 +1,5 @@
+{
+  "title": "AWS QuickSight Sample Slack App",
+  "aws_secret_name": "slackanalytics_app_secret",
+  "aws_region": "us-east-1"
+}

@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  h1(class='display-4')='Hello, world!'
+  p(class='lead')='Follow the instruction below to install the app in your Slack Enterprise Grid.'
+  hr(class='my-4')
+  div
+    | 1. Update your Slack App redirect URL to point to this site.
+    p
+    span(id='placeholder', class='badge badge-pill badge-primary')
+    p
+    p
+    | 2. Confirm your Slack Application Client ID:
+    p
+    span(class='badge badge-pill badge-primary')=client_id
+    p
+    p
+    | 3. Click on this link to authenticate with Slack and deploy the app.
+    p
+    div(class='row')
+        div(class="col-sm")
+        div(class="col-sm")
+            a(href="https://slack.com/oauth/v2/authorize?client_id=" + client_id + "user_scope=admin.analytics:read&redirect_uri=", id='slack_url')
+                img(alt='Add to Slack', height='40', width='139',
+                    src='https://platform.slack-edge.com/img/add_to_slack.png',
+                    srcSet='https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x')
+        div(class='col-sm')
+    p
+    p
+    div(class='alert alert-secondary', role='alert')
+        | The Slack Analytics endpoint is an admin endpoint. When installing an app, be sure to install it on your Grid organization, not a workspace within the organization.
