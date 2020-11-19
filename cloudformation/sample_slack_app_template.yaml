@@ -76,6 +76,7 @@ Resources:
           ToPort: 3000
           CidrIp: 0.0.0.0/0
     DependsOn: SlackAppALBSecurityGroup
+  #TODO - Deploy on specific subnet.
   SlackAppInstance:
     Type: AWS::EC2::Instance
     DependsOn:
@@ -154,7 +155,7 @@ Resources:
         Protocol: HTTP
         DefaultActions:
           - Type: forward
-          - ForwardConfig: !Ref SlackAppTargetGroup
+            TargetGroupArn: !Ref SlackAppTargetGroup
   #TODO - Create Cloudfront
 Outputs:
   SlackAppHTTPSURL:
