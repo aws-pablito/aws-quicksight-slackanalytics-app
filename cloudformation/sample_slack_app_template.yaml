@@ -1,37 +1,112 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Parameters:
-  SlackClientId:
-    Description: "Slack App Client ID"
-    Type: String
-  SlackClientSecret:
-    Description: "Slack App Secret Key"
-    Type: String
-  InstanceSSHKey:
+  AppVPC:
+    Description: "The VPC in which to deploy instance"
+    Type: AWS::EC2::VPC::Id
+  AppSubnets:
+    Description: "Select 2 Subnets with different Availability Zones in which to deploy instance"
+    Type: "List<AWS::EC2::Subnet::Id>"
+  InstanceKeyPair:
     Description: "SSH key to log into your instance for troubleshooting purposes"
-    Type: String
+    Type: AWS::EC2::KeyPair::KeyName
 Resources:
-  slackappinstance:
+  # Give the instance access to read and create AWS secret.
+  SlackAppInstanceRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      Policies:
+        - PolicyName: "awssecretaccess"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: "Allow"
+                Action:
+                  - "secretsmanager:GetSecretValue"
+                Resource: !Join
+                  - ''
+                  - - 'arn:'
+                    - !Ref AWS::Partition
+                    - ':secretsmanager:'
+                    - !Ref AWS::Region
+                    - ':'
+                    - !Ref AWS::AccountId
+                    - ':secret:'
+                    - 'slackanalytics_app_secret*'
+              - Effect: "Allow"
+                Action:
+                  - "secretsmanager:CreateSecret"
+                Resource: '*'
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service:
+                - "ec2.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+  SlackAppInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Roles:
+        - !Ref SlackAppInstanceRole
+  SlackAppALBSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: "SlackApp Instance Rules"
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          Description: "Node.js Express App Port"
+          FromPort: 3000
+          ToPort: 3000
+          CidrIp: 0.0.0.0/0
+  SlackAppInstanceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: "SlackApp Instance Rules"
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          Description: "Node.js Express App Port for ALB security group"
+          FromPort: 3000
+          ToPort: 3000
+          SourceSecurityGroupId: !GetAtt SlackAppALBSecurityGroup.GroupId
+        #TODO - Remove public access
+        - IpProtocol: tcp
+          FromPort: 3000
+          ToPort: 3000
+          CidrIp: 0.0.0.0/0
+    DependsOn: SlackAppALBSecurityGroup
+  SlackAppInstance:
     Type: AWS::EC2::Instance
+    DependsOn:
+      - SlackAppInstanceProfile
+      - SlackAppInstanceSecurityGroup
     Properties:
       InstanceType: t2.micro
       ImageId: ami-04bf6dcdc9ab498ca
-      KeyName: !Ref InstanceSSHKey
+      KeyName: !Ref InstanceKeyPair
+      IamInstanceProfile: !Ref SlackAppInstanceProfile
+      SecurityGroups:
+        - !Ref SlackAppInstanceSecurityGroup
       BlockDeviceMappings:
         - DeviceName: "/dev/xvda"
           Ebs:
             VolumeType: "gp2"
             DeleteOnTermination: "true"
             VolumeSize: "10"
+      Tags:
+        - Key: Name
+          Value: "QuickSight SlackApp Instance"
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
           set -x
           exec > >(tee /var/log/user-data.log|logger -t user-data ) 2>&1
-          su ec2-user
 
           echo "1. Install nvm"
           curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
-          . ~/.nvm/nvm.sh
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
           echo "2. Install node.js"
           nvm install node
@@ -43,7 +118,7 @@ Resources:
           git version
 
           echo "4. Download and deploy sample app from git"
-          cd ~/
+          cd /home/ec2-user/
           git clone https://github.com/aws-pablito/aws-quicksight-slackanalytics.git
           cd aws-quicksight-slackanalytics/webapp
           npm install
@@ -51,5 +126,44 @@ Resources:
           echo "5. Install pm2 and run app"
           npm install pm2 -g
           pm2 --name qs-slackanalytics-app start npm -- start
+  SlackAppELB:
+    Type: "AWS::ElasticLoadBalancingV2::LoadBalancer"
+    DependsOn: SlackAppALBSecurityGroup
+    Properties:
+      Subnets: !Ref AppSubnets
+      SecurityGroups:
+        - !GetAtt SlackAppALBSecurityGroup.GroupId
+  SlackAppTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Port: 3000
+      Protocol: HTTP
+      TargetType: instance
+      VpcId: !Ref AppVPC
+      Targets:
+        - Port: 3000
+          Id: !Ref SlackAppInstance
+  SlackAppELBListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    DependsOn:
+      - SlackAppELB
+      - SlackAppTargetGroup
+    Properties:
+        Port: 3000
+        LoadBalancerArn: !Ref SlackAppELB
+        Protocol: HTTP
+        DefaultActions:
+          - Type: forward
+          - ForwardConfig: !Ref SlackAppTargetGroup
+  #TODO - Create Cloudfront
+Outputs:
+  SlackAppHTTPSURL:
+    Description: "The URL to reach the slack app."
+    Value: !Join
+      - ''
+      - - "http://"
+        - !GetAtt SlackAppInstance.PublicDnsName
+        - ":3000"
+
 
 

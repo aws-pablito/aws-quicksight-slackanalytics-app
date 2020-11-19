@@ -21,8 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //TODO - extra slack path is temporarely as I'm hosting with other tools.
 app.use('/', indexRouter);
-app.use('/slack', indexRouter);
-app.use('/slack/auth', authRouter);
+app.use('/auth', authRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
