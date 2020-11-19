@@ -1,13 +1,13 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Parameters:
   AppVPC:
-    Description: "The VPC in which to deploy instance"
+    Description: "The VPC in which to deploy your instance"
     Type: AWS::EC2::VPC::Id
   AppSubnets:
-    Description: "Select 2 Subnets with different Availability Zones in which to deploy instance"
+    Description: "Select 2 Subnets with different Availability Zones in which to deploy your instance"
     Type: "List<AWS::EC2::Subnet::Id>"
   InstanceKeyPair:
-    Description: "SSH key to log into your instance for troubleshooting purposes"
+    Description: "SSH key to log into your Slack App instance for troubleshooting purposes"
     Type: AWS::EC2::KeyPair::KeyName
 Resources:
   # Give the instance access to read and create AWS secret.
@@ -70,13 +70,7 @@ Resources:
           FromPort: 3000
           ToPort: 3000
           SourceSecurityGroupId: !GetAtt SlackAppALBSecurityGroup.GroupId
-        #TODO - Remove public access
-        - IpProtocol: tcp
-          FromPort: 3000
-          ToPort: 3000
-          CidrIp: 0.0.0.0/0
     DependsOn: SlackAppALBSecurityGroup
-  #TODO - Deploy on specific subnet.
   SlackAppInstance:
     Type: AWS::EC2::Instance
     DependsOn:
@@ -87,8 +81,9 @@ Resources:
       ImageId: ami-04bf6dcdc9ab498ca
       KeyName: !Ref InstanceKeyPair
       IamInstanceProfile: !Ref SlackAppInstanceProfile
-      SecurityGroups:
-        - !Ref SlackAppInstanceSecurityGroup
+      SecurityGroupIds:
+        - !GetAtt SlackAppInstanceSecurityGroup.GroupId
+      SubnetId: !Select [0, !Ref AppSubnets]
       BlockDeviceMappings:
         - DeviceName: "/dev/xvda"
           Ebs:
@@ -99,6 +94,7 @@ Resources:
         - Key: Name
           Value: "QuickSight SlackApp Instance"
       UserData:
+        # TODO - Consider creating a custom AMI instead.
         Fn::Base64: !Sub |
           #!/bin/bash
           set -x
@@ -156,15 +152,69 @@ Resources:
         DefaultActions:
           - Type: forward
             TargetGroupArn: !Ref SlackAppTargetGroup
-  #TODO - Create Cloudfront
+  DistributionCachePolicy:
+    Type: AWS::CloudFront::CachePolicy
+    Properties:
+      CachePolicyConfig:
+        Comment: "Default values but allows forwarding query strings to origin."
+        Name: !Join
+          - '-'
+          - - "forward-qs"
+            - !Ref AWS::StackName
+        DefaultTTL: 5
+        MaxTTL: 31536000
+        MinTTL: 1
+        ParametersInCacheKeyAndForwardedToOrigin:
+          CookiesConfig:
+              CookieBehavior: "none"
+          HeadersConfig:
+              HeaderBehavior: "none"
+          EnableAcceptEncodingGzip: true
+          QueryStringsConfig:
+            QueryStringBehavior: "all"
+  SlackAppDistribution:
+    Type: AWS::CloudFront::Distribution
+    DependsOn:
+      - DistributionCachePolicy
+      - SlackAppELB
+    Properties:
+      DistributionConfig:
+        Origins:
+          - Id: ELB-quicksight-slackanalytics-lb
+            DomainName: !GetAtt SlackAppELB.DNSName
+            ConnectionAttempts: 3
+            ConnectionTimeout: 10
+            CustomOriginConfig:
+              HTTPPort: 3000
+              HTTPSPort: 443
+              OriginProtocolPolicy: http-only
+              OriginSSLProtocols:
+                - TLSv1
+                - TLSv1.1
+                - TLSv1.2
+              OriginReadTimeout: 30
+              OriginKeepaliveTimeout: 5
+        DefaultCacheBehavior:
+            TargetOriginId: ELB-quicksight-slackanalytics-lb
+            ViewerProtocolPolicy: https-only
+            AllowedMethods:
+              - HEAD
+              - GET
+            SmoothStreaming: false
+            Compress: false
+            CachePolicyId: !Ref DistributionCachePolicy
+        PriceClass: PriceClass_100
+        Enabled: true
+        ViewerCertificate:
+            CloudFrontDefaultCertificate: true
+            MinimumProtocolVersion: TLSv1
 Outputs:
   SlackAppHTTPSURL:
     Description: "The URL to reach the slack app."
     Value: !Join
       - ''
-      - - "http://"
-        - !GetAtt SlackAppInstance.PublicDnsName
-        - ":3000"
+      - - "https://"
+        - !GetAtt SlackAppDistribution.DomainName
 
 
 
