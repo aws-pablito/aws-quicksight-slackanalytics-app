@@ -1,15 +1,15 @@
 # aws-quicksight-slackanalytics
 
-## 1. Deploy the Slack Application
+## Deploy the Slack Application
 
 1. Create a custom Slack App following [these instructions](https://api.slack.com/scopes/admin.conversations:write)
 
 Note: In the OAuth and Permissions section, for redirect URL use a placeholder such as "https://not-a-real-domain.com/".
 
-2. Deploy the sample Slack App Web Application in your AWS account using these AWS CloudFormation template. 
+2. Deploy the sample Slack Web App in your AWS account using these AWS CloudFormation template. 
 Currently, the template is supported for the us-east-1 region only.  
 
-    - Using AWS Console:  [Template](https://us-east-1.console.aws.amazon.com/cloudformation/home?region=us-east-1&templateURL=https://s3-us-east-1.amazonaws.com/quicksight.slackanalytics.afqconnector/sample_slack_app_template.yaml&stackName=slackanalytics_web_app)
+    - Using AWS Console:  [Template](https://us-east-1.console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/review?&templateURL=https://s3-us-east-1.amazonaws.com/quicksight.slackanalytics.afqconnector/sample_slack_app_template.yaml&stackName=slackanalytics_web_app)
     
     - Using AWS CLI (replace all elements within "< >":
     
@@ -25,4 +25,4 @@ Currently, the template is supported for the us-east-1 region only.
         
 3. Follow the instructions in the app to update your redirect URL and install the Athena Federated Query Connector in your AWS account. 
 
-4. Query the Slack Analytics Member Analytics using Amazon Athena or QuickSight Connector to Athena. 
+4. Query the Slack Member Analytics using Amazon Athena or QuickSight Connector to Athena. 
