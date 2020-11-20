@@ -9,6 +9,8 @@ var config = require('../config.json')
 /* OAuth workload */
 router.get('/', function(req, res, next) {
 
+  var random_string = "_" + crypto.randomBytes(5).toString('base64').slice(0,5);
+
   if (req.query.code) {
     /**
      *  1. AFTER USER ACCEPTS INSTALLATION, GET SLACK AUTHENTICATION CODE FROM SLACK REQUEST PARAMETERS
@@ -75,7 +77,7 @@ router.get('/', function(req, res, next) {
               /**
                * 4. STORE BEARER TOKEN IN NEW AWS SECRET
                */
-              var tokenSecretName= "slack_analytics_token_" + crypto.randomBytes(5).toString('base64').slice(0,5);
+              var tokenSecretName= "slack_analytics_token" + random_string;
               var params = {
                 SecretString: JSON.stringify(bodyJSON.authed_user),
                 Description: "SlackAnalytics App authentication token",
@@ -92,8 +94,16 @@ router.get('/', function(req, res, next) {
                   });
                 }else {
                   //Share secrets info for deploying athena federated query lambda function.
-                  //TODO - Share cloudformation template link to deploy connector
-                  res.render('auth', data);
+                  template_url= 'https://us-east-1.console.aws.amazon.com/cloudformation/home?' +
+                                'region=us-east-1#/stacks/create/review?&' +
+                                'templateURL=https://s3.us-east-1.amazonaws.com/quicksight.slackanalytics.afqconnector/' +
+                                'sample_slack_athena_connector.yaml&stackName=slackanalytics-afq-connector' + random_string +
+                                '&param_AthenaCatalogName=slackanalytics&param_AWSSecretName=' + data.Name
+                  res.render('auth', {
+                    'secret_info': data,
+                    'title': config.title,
+                    'template_url': template_url
+                  });
                 }
               });
             } else {

@@ -1,7 +1,26 @@
 Transform: AWS::Serverless-2016-10-31
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+      - Label:
+          default: Connector Configuration
+        Parameters:
+          - AthenaCatalogName
+          - AWSSecretName
+          - SlackEndpointURL
+      - Label:
+          default: Lambda Function Configuration
+        Parameters:
+          - SpillBucket
+          - SpillPrefix
+          - DisableSpillEncryption
+          - LambdaTimeout
+          - LambdaMemory
+    ParameterLabels:
+      AthenaCatalogName: Lambda Name
 Parameters:
   AthenaCatalogName:
-    Description: The name you will give to this catalog in Athena. It will also be used as the function name. This name must satisfy the pattern ^[a-z0-9-_]{1,64}$
+    Description: The name you will give to this catalog in Athena. It will also be used as the lambda function name. This name must satisfy the pattern ^[a-z0-9-_]{1,64}$
     Type: String
     AllowedPattern: ^[a-z0-9-_]{1,64}$
     Default: slackanalytics
@@ -13,7 +32,7 @@ Parameters:
     Description: AWS Secret name where Slack API token is stored.
     Type: String
   SpillBucket:
-    Description: The name of the bucket where this function can spill data.
+    Description: Specify the name of an S3 bucket where this function can spill data.
     Type: String
   SpillPrefix:
     Description: The prefix within SpillBucket where this function can spill data.

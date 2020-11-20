@@ -1,16 +1,23 @@
 extends layout
 
 block content
+  h4= 'Congrats!'
+  | You have deployed your app in your Slack Enterprise grid.
+  p
+  | Click on this link to deploy your AWS Athena Federated Query Connector. This sample only supports the "us-east-1" region.
+  a(href=template_url, target='_blank')
+    img(src='./images/cloudformation-launch-stack.png',alt='Launch')
+  hr(class='my-4')
   h4= 'Your AWS Secrets Manager secret:'
   p
   table(class='table')
     tbody
         tr
           td='NAME:'
-          td=Name
+          td=secret_info.Name
         tr
           td='ARN:'
-          td=ARN
+          td=secret_info.ARN
         tr
           td="VERSION:"
-          td=VersionId
+          td=secret_info.VersionId

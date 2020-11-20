@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var AWS = require('aws-sdk');
 var config = require('../config.json');
+var crypto = require('crypto');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
