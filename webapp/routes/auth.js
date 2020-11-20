@@ -94,7 +94,7 @@ router.get('/', function(req, res, next) {
                   });
                 }else {
                   //Share secrets info for deploying athena federated query lambda function.
-                  template_url= 'https://us-east-1.console.aws.amazon.com/cloudformation/home?' +
+                  launch_template_url= 'https://us-east-1.console.aws.amazon.com/cloudformation/home?' +
                                 'region=us-east-1#/stacks/create/review?&' +
                                 'templateURL=https://s3.us-east-1.amazonaws.com/quicksight.slackanalytics.afqconnector/' +
                                 'sample_slack_athena_connector.yaml&stackName=slackanalytics-afq-connector' + random_string +
@@ -102,7 +102,7 @@ router.get('/', function(req, res, next) {
                   res.render('auth', {
                     'secret_info': data,
                     'title': config.title,
-                    'template_url': template_url
+                    'launch_template_url': launch_template_url
                   });
                 }
               });
