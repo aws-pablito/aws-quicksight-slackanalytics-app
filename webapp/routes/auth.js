@@ -5,7 +5,6 @@ var AWS = require('aws-sdk');
 var request = require('request');
 var config = require('../config.json')
 
-//TODO - Move all hardcoded links to config file.
 /* OAuth workload */
 router.get('/', function(req, res, next) {
 
