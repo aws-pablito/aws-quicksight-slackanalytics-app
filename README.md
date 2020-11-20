@@ -1,5 +1,7 @@
 # aws-quicksight-slackanalytics
 
+Under development...
+
 ## Deploy the Slack Application
 
 1. Create a custom Slack App following [these instructions](https://api.slack.com/scopes/admin.conversations:write)
@@ -26,3 +28,6 @@ Currently, the template is supported for the us-east-1 region only.
 3. Follow the instructions in the app to update your redirect URL and install the Athena Federated Query Connector in your AWS account. 
 
 4. Query the Slack Member Analytics using Amazon Athena or QuickSight Connector to Athena. 
+
+## Athena Federated Queries (AFQ)
+To learn more check out the AFQ in action [here](https://athena-in-action.workshop.aws/60-connector/601-connector-code.html).
