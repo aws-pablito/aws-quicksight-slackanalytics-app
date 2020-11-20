@@ -2,12 +2,17 @@ extends layout
 
 block content
   h4= 'Congrats!'
-  | You have deployed your app in your Slack Enterprise grid.
+  hr(class='my-4')
   p
-  | Click on this link to deploy your custom AWS Athena Federated Query Connector. This sample only supports the "us-east-1" region.
+  | You have successfully deployed your app in your Slack Enterprise Grid.
+  p
+  | Click on this link to deploy your custom AWS Athena Federated Query Connector.
+  p
   a(href=launch_template_url, target='_blank')
     img(src='./images/cloudformation-launch-stack.png',alt='Launch')
-  hr(class='my-4')
+  p
+  | <i>This sample template currently supports the  "us-east-1" region only.</i>
+  p
   h4= 'Your AWS Secrets Manager secret:'
   p
   table(class='table')

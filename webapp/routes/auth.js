@@ -9,7 +9,7 @@ var config = require('../config.json')
 /* OAuth workload */
 router.get('/', function(req, res, next) {
 
-  var random_string = "_" + crypto.randomBytes(5).toString('base64').slice(0,5);
+  var random_string = crypto.randomBytes(5).toString('base64').slice(0,5);
 
   if (req.query.code) {
     /**
@@ -77,7 +77,7 @@ router.get('/', function(req, res, next) {
               /**
                * 4. STORE BEARER TOKEN IN NEW AWS SECRET
                */
-              var tokenSecretName= "slack_analytics_token" + random_string;
+              var tokenSecretName= "slack_analytics_token_" + random_string;
               var params = {
                 SecretString: JSON.stringify(bodyJSON.authed_user),
                 Description: "SlackAnalytics App authentication token",
@@ -97,7 +97,7 @@ router.get('/', function(req, res, next) {
                   launch_template_url= 'https://us-east-1.console.aws.amazon.com/cloudformation/home?' +
                                 'region=us-east-1#/stacks/create/review?&' +
                                 'templateURL=https://s3.us-east-1.amazonaws.com/quicksight.slackanalytics.afqconnector/' +
-                                'sample_slack_athena_connector.yaml&stackName=slackanalytics-afq-connector' + random_string +
+                                'sample_slack_athena_connector.yaml&stackName=slackanalytics-afq-connector-' + random_string +
                                 '&param_AthenaCatalogName=slackanalytics&param_AWSSecretName=' + data.Name
                   res.render('auth', {
                     'secret_info': data,
