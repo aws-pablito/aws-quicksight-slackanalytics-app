@@ -8,7 +8,7 @@ var config = require('../config.json')
 /* OAuth workload */
 router.get('/', function(req, res, next) {
 
-  var random_string = crypto.randomBytes(5).toString('base64').slice(0,5);
+  var random_string = crypto.randomBytes(5).toString('hex').slice(0,5);
 
   if (req.query.code) {
     /**
