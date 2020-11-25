@@ -64,7 +64,7 @@ Resources:
           secret_name: !Ref AWSSecretName
       FunctionName: !Ref AthenaCatalogName
       Handler: com.amazonaws.connectors.athena.slack.SlackCompositeHandler
-      CodeUri: s3://quicksight.slackanalytics.afqconnector/athena-slackanalytics-1.0.jar
+      CodeUri: s3://quicksight.slackanalytics.afqconnector/athena-slack-member-analytics-1.0.jar
       Description: A guided example for writing and deploying your own federated Amazon Athena connector for Slack API.
       Runtime: java8
       Timeout: !Ref LambdaTimeout
