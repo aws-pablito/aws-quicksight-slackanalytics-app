@@ -5,12 +5,12 @@ Metadata:
       - Label:
           default: Connector Configuration
         Parameters:
-          - AthenaCatalogName
           - AWSSecretName
           - SlackEndpointURL
       - Label:
           default: Lambda Function Configuration
         Parameters:
+          - LambdaFunctionName
           - SpillBucket
           - SpillPrefix
           - DisableSpillEncryption
@@ -19,11 +19,11 @@ Metadata:
     ParameterLabels:
       AthenaCatalogName: Lambda Name
 Parameters:
-  AthenaCatalogName:
-    Description: The name you will give to this catalog in Athena. It will also be used as the lambda function name. This name must satisfy the pattern ^[a-z0-9-_]{1,64}$
+  LambdaFunctionName:
+    Description: The name you will give to lambda function. This name must satisfy the pattern ^[a-z0-9-_]{1,64}$
     Type: String
     AllowedPattern: ^[a-z0-9-_]{1,64}$
-    Default: slackanalytics
+    Default: slackmemberanalytics
   SlackEndpointURL:
     Description: Slack Analytics data endpoint.
     Type: String
@@ -62,10 +62,10 @@ Resources:
           data_endpoint: !Ref SlackEndpointURL
           region: !Ref AWS::Region
           secret_name: !Ref AWSSecretName
-      FunctionName: !Ref AthenaCatalogName
+      FunctionName: !Ref LambdaFunctionName
       Handler: com.amazonaws.connectors.athena.slack.SlackCompositeHandler
       CodeUri: s3://quicksight.slackanalytics.afqconnector/athena-slack-member-analytics-1.0.jar
-      Description: A guided example for writing and deploying your own federated Amazon Athena connector for Slack API.
+      Description: A sample connector for accessing Slack Member Analytics API data via Amazon Athena Federated Queries.
       Runtime: java8
       Timeout: !Ref LambdaTimeout
       MemorySize: !Ref LambdaMemory
