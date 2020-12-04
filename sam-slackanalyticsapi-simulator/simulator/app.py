@@ -1,5 +1,6 @@
 import json
 import random
+import gzip
 
 
 # Sample lambda function to respond to test scenarios of the connector build
@@ -37,9 +38,11 @@ def lambda_handler(event, context):
         })
     
     result = [json.dumps(record) for record in data_array]
+    body = '\n'.join(result)
     
-    # slack analytics api outputs new line delimited json
+    # slack analytics api outputs new line delimited json compressed in gzip encoding
     return { 
       "statusCode": 200,
-      "body": '\n'.join(result)
+      "body": body
     }
+

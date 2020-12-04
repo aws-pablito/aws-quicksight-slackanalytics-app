@@ -10,9 +10,8 @@ for a detailed walk-through of the process.
 
 1. From the athena-slack-member-analytics/sam-slackanalytics-simulator dir, run  `sam build`
 2. From the athena-slack-member-analytics/sam-slackanalytics-simulator dir, run Deploy your application `sam deploy --guided` and follow the prompts.
-3. Since Slack API responds with a gzip, from the AWS Console navigate to AWS API Gateway and update the settings 
-to Enable Content Encoding and set minimum to 0. For details see [API Gateway Payload Compression](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-gzip-compression-decompression.html)
-4 - Test your endpoint.
+3. Test your endpoint.
+
 ```
 curl -H "Accept-Encoding:gzip" -X GET "https://<your_api_gateway_endpoint>/Prod/api/admin.analytics.getFile?date=2020-11-09" >> sample.gzip
 ```
