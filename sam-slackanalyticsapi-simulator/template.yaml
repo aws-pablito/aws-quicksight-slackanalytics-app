@@ -1,0 +1,28 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  SlackDataSimulator:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: simulator/
+      Handler: app.lambda_handler
+      Runtime: python3.8
+      Events:
+        HttpGet:
+          Type: Api
+          Properties:
+            Path: '/api/admin.analytics.getFile'
+            Method: get
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  SlackDataSimulatorAPI:
+    Description: "API Gateway endpoint URL for Prod stage"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/api/admin.analytics.getFile?date=2020-11-10"
+  SlackDataSimulatorFunction:
+    Description: "SlackAPI Simulator Lambda Function ARN"
+    Value: !GetAtt SlackDataSimulator.Arn
+  SlackDataSimulatorFunctionIamRole:
+    Description: "Implicit IAM Role created for Slack Data Simulator function"
+    Value: !GetAtt SlackDataSimulatorRole.Arn

@@ -1,0 +1,18 @@
+## sam-slackanalytics-simulator
+
+This is a simple severless application that leverages AWS API Gateway and AWS Lambda to simulate responses from the Slack Member Analytics REST API. Use this application for build and test purposes. The application 
+is build using the [AWS SAM CLI](https://aws.amazon.com/serverless/sam/). 
+
+Recommend checking the ["Hello World" Tutorial](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-getting-started-hello-world.html)
+for a detailed walk-through of the process.
+
+## Deployment Instructions:
+
+1. From the athena-slack-member-analytics/sam-slackanalytics-simulator dir, run  `sam build`
+2. From the athena-slack-member-analytics/sam-slackanalytics-simulator dir, run Deploy your application `sam deploy --guided` and follow the prompts.
+3. Since Slack API responds with a gzip, from the AWS Console navigate to AWS API Gateway and update the settings 
+to Enable Content Encoding and set minimum to 0. For details see [API Gateway Payload Compression](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-gzip-compression-decompression.html)
+4 - Test your endpoint.
+```
+curl -H "Accept-Encoding:gzip" -X GET "https://<your_api_gateway_endpoint>/Prod/api/admin.analytics.getFile?date=2020-11-09" >> sample.gzip
+```
