@@ -12,6 +12,11 @@ webapp/pids
 *.seed
 *.pid.lock
 
+# sam configuration
+*.toml
+.aws-sam/
+sample.gzip
+
 # Dependency directories
 node_modules/
 

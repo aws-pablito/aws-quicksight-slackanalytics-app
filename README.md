@@ -1,6 +1,12 @@
 # aws-quicksight-slackanalytics
 
-Under development...
+This is a sample node.js express web application to perform OAuth with the Slack Web API and store the bearer token in 
+an AWS Secrets manager secret. 
+
+This application only need to run during the OAuth workflow (First authentication or during a schedule key rotation). 
+For cost optimization consider terminating your cloudformation deployment once the app is authorized. 
+
+In future releases we plan to make this workflow serverless. 
 
 ## Deploy the Slack Application
 
