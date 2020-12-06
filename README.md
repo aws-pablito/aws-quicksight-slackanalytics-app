@@ -12,7 +12,7 @@ In future releases we plan to make this workflow serverless.
 
 ## Deploy the Slack Application
 
-1. Create a custom Slack App following [these instructions](https://api.slack.com/scopes/admin.conversations:write)
+1. Create a custom Slack App following [these instructions](https://api.slack.com/scopes/admin.analytics:read)
 
 Note: In the OAuth and Permissions section, for redirect URL use a placeholder such as "https://not-a-real-domain.com/". 
 The scope for the app should be `admin.analytics:read`.
