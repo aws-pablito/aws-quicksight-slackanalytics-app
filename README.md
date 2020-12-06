@@ -17,12 +17,14 @@ In future releases we plan to make this workflow serverless.
 Note: In the OAuth and Permissions section, for redirect URL use a placeholder such as "https://not-a-real-domain.com/". 
 The scope for the app should be `admin.analytics:read`.
 
-2. Deploy the sample Slack Web App in your AWS account using this AWS CloudFormation template.  
+2. Create an AWS Secrets Manager secret named "slackanalytics_app_secret" and store your Slack app's client secrets under the  "client_id" and "client_secret" keys. 
+
+3. Deploy the sample Slack Web App in your AWS account using this AWS CloudFormation template.  
 
     - From the AWS Console:  [Template](https://us-east-1.console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/review?&templateURL=https://s3.us-east-1.amazonaws.com/quicksight.slackanalytics.afqconnector/sample_slack_app_template.yaml&stackName=qs-slackanalytics-web-app)
     
     - From terminal (replace all elements within "< >":
-    
+
 ```
     aws cloudformation create-stack \
         --stack-name <choose_a_unique_name> \
@@ -35,9 +37,9 @@ The scope for the app should be `admin.analytics:read`.
 
 Note: current template is supported for the us-east-1 region only
         
-3. Follow the instructions in the app to update your redirect URL and install the Athena Federated Query Connector in your AWS account. 
+4. Follow the instructions in the app to update your redirect URL and install the Athena Federated Query Connector in your AWS account. 
 
-4. Query the Slack Member Analytics using Amazon Athena or QuickSight Connector to Athena. 
+5. Query the Slack Member Analytics using Amazon Athena or QuickSight Connector to Athena. 
 
 ## Athena Federated Queries (AFQ)
 To learn more check out AFQ in action [here](https://athena-in-action.workshop.aws/60-connector/601-connector-code.html).
