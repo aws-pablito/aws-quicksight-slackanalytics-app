@@ -4,7 +4,7 @@ Parameters:
     Description: "The VPC in which to deploy your instance"
     Type: AWS::EC2::VPC::Id
   AppSubnets:
-    Description: "Select 2 Subnets with different Availability Zones in which to deploy your instance"
+    Description: "Select at least 2 subnets from your VPC with different Availability Zones in which to deploy your instance"
     Type: "List<AWS::EC2::Subnet::Id>"
   InstanceKeyPair:
     Description: "SSH key to log into your Slack App instance for troubleshooting purposes"

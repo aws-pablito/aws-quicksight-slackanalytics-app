@@ -19,7 +19,7 @@ The scope for the app should be `admin.analytics:read`.
 
 2. Deploy the sample Slack Web App in your AWS account using this AWS CloudFormation template.  
 
-    - From the AWS Console:  [Template](https://us-east-1.console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/review?&templateURL=https://s3.us-east-1.amazonaws.com/quicksight.slackanalytics.afqconnector/sample_slack_app_template.yaml&stackName=slackanalytics_web_app)
+    - From the AWS Console:  [Template](https://us-east-1.console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/review?&templateURL=https://s3.us-east-1.amazonaws.com/quicksight.slackanalytics.afqconnector/sample_slack_app_template.yaml&stackName=qs-slackanalytics-web-app)
     
     - From terminal (replace all elements within "< >":
     
