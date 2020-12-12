@@ -65,7 +65,7 @@ Resources:
       FunctionName: !Ref LambdaFunctionName
       Handler: com.amazonaws.connectors.athena.slack.SlackCompositeHandler
       CodeUri: s3://quicksight.slackanalytics.afqconnector/athena-slack-member-analytics-1.0.jar
-      Description: A sample connector for accessing Slack Member Analytics API data via Amazon Athena Federated Queries.
+      Description: A sample connector for accessing Slack Member Analytics API data via Amazon Athena Federated Query.
       Runtime: java8
       Timeout: !Ref LambdaTimeout
       MemorySize: !Ref LambdaMemory
