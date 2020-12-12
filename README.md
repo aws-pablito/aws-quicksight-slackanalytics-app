@@ -41,5 +41,5 @@ Note: current template is supported for the us-east-1 region only
 
 5. Query the Slack Member Analytics using Amazon Athena or QuickSight Connector to Athena. 
 
-## Athena Federated Queries (AFQ)
+## Athena Federated Query (AFQ)
 To learn more check out AFQ in action [here](https://athena-in-action.workshop.aws/60-connector/601-connector-code.html).
