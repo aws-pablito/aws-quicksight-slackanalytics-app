@@ -15,3 +15,8 @@ for a detailed walk-through of the process.
 ```
 curl -H "Accept-Encoding:gzip" -X GET "https://<your_api_gateway_endpoint>/Prod/api/admin.analytics.getFile?date=2020-11-09" >> sample.gzip
 ```
+
+## License
+
+Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+[SPDX-License-Identifier: MIT-0](../LICENSE)
