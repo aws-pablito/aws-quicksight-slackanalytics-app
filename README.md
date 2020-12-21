@@ -13,7 +13,7 @@ In future releases we plan to make this workflow serverless.
 ## Content
 Here are the contents of this repository:
 
-- [/sam-slackanalyticsapi-simulator](sam-slackanalyticsapi-simulator/) - AWS SAM app to deploy a serverless app that simulates the Slack Member Analytics API with AWS API Gateway and AWS Lambda for dev test purposes.
+- [/sam-slackanalyticsapi-simulator](sam-slackanalyticsapi-simulator/) - Use this AWS SAM app to simulate the Slack Member Analytics API using AWS API Gateway and AWS Lambda.
 - [/cloudformation](cloudformation)
     - [sample_slack_app_template.yaml](cloudformation/sample_slack_app_template.yaml) - Sample AWS CloudFormation templates for deploying web app in EC2 
     - [sample_slack_athena_connector.yaml](cloudformation/sample_slack_athena_connector.yaml) - Sample AWS CloudFormation template for deploying the custom Athena Federated Query Connector for Slack Member Analytics API.
