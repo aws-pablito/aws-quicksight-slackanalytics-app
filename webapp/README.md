@@ -40,3 +40,6 @@ verify its authenticity and integrity.
     npm install pm2 -g
     pm2 --name qs-slackanalytics-app start npm -- start
 ```
+## License
+Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+[SPDX-License-Identifier: MIT-0](../LICENSE)

@@ -1,3 +1,5 @@
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: MIT-0
 var express = require('express');
 var router = express.Router();
 var AWS = require('aws-sdk');
