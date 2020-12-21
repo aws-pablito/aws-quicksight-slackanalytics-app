@@ -13,11 +13,11 @@ In future releases we plan to make this workflow serverless.
 ## Content
 Here are the contents of this repository:
 
-- /sam-slackanalyticsapi-simulator - AWS SAM app to deploy a serverless app that simulates the Slack Member Analytics API with AWS API Gateway and AWS Lambda for dev test purposes.
-- /cloudformation
-    - sample_slack_app_template.yaml - Sample AWS CloudFormation templates for deploying web app in EC2 
-    - sample_slack_athena_connector.yaml - Sample AWS CloudFormation template for deploying the custom Athena Federated Query Connector for Slack Member Analytics API.
-- /webapp - The Node.js Express Application
+- [/sam-slackanalyticsapi-simulator](sam-slackanalyticsapi-simulator/) - AWS SAM app to deploy a serverless app that simulates the Slack Member Analytics API with AWS API Gateway and AWS Lambda for dev test purposes.
+- [/cloudformation](cloudformation)
+    - [sample_slack_app_template.yaml](cloudformation/sample_slack_app_template.yaml) - Sample AWS CloudFormation templates for deploying web app in EC2 
+    - [sample_slack_athena_connector.yaml](cloudformation/sample_slack_athena_connector.yaml) - Sample AWS CloudFormation template for deploying the custom Athena Federated Query Connector for Slack Member Analytics API.
+- [/webapp](webapp/) - The Node.js Express Application
 
 ## Deploy the Slack Application
 
@@ -53,6 +53,9 @@ Note: current template is supported for the us-east-1 region only. You can custo
 ## About Athena Federated Query (AFQ)
 
 To learn more check out AFQ in action [here](https://athena-in-action.workshop.aws/60-connector/601-connector-code.html).
+
+## Version
+- 2020.12.0 - First release
 
 ## License
 
