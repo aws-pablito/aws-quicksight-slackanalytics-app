@@ -76,19 +76,17 @@ router.get('/', function(req, res, next) {
 
             if(bodyJSON.authed_user){ //Save token info on AWS secrets manager upon success
               /**
-               * 4. STORE BEARER TOKEN IN NEW AWS SECRET
+               * 4. STORE BEARER TOKEN USING SAME AWS SECRET
                * TODO - Use the same secret as input so it can be re-used and simplify revoke and re-authorize the application.
                */
-              var tokenSecretName= "slack_analytics_token_" + random_string;
               var params = {
-                SecretString: JSON.stringify(bodyJSON.authed_user),
-                Description: "SlackAnalytics App authentication token",
-                Name:  tokenSecretName,
+                SecretId: config.aws_secret_name
+                SecretString: JSON.stringify(bodyJSON.authed_user)
               }
-              client.createSecret(params, function(err, data) {
+              client.putSecretValue(params, function(err, data) {
                 if(err){
                   res.render('error', { title: 'ERROR',
-                    message: 'Unable to create new AWS Secret.',
+                    message: 'Unable to update AWS Secret',
                     error: {
                       status: err.code,
                       stack: err.stack

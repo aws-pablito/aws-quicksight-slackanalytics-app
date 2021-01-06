@@ -24,6 +24,7 @@ Resources:
               - Effect: "Allow"
                 Action:
                   - "secretsmanager:GetSecretValue"
+                  - "secretsmanager:PutSecretValue"
                 Resource: !Join
                   - ''
                   - - 'arn:'
@@ -34,10 +35,6 @@ Resources:
                     - !Ref AWS::AccountId
                     - ':secret:'
                     - 'slackanalytics_app_secret*'
-              - Effect: "Allow"
-                Action:
-                  - "secretsmanager:CreateSecret"
-                Resource: '*'
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
