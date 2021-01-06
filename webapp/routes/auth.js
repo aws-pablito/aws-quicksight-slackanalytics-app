@@ -77,8 +77,9 @@ router.get('/', function(req, res, next) {
             if(bodyJSON.authed_user){ //Save token info on AWS secrets manager upon success
               /**
                * 4. STORE BEARER TOKEN USING SAME AWS SECRET
-               * TODO - Use the same secret as input so it can be re-used and simplify revoke and re-authorize the application.
                */
+              bodyJSON.authed_user['secret_key'] = secrets.client_id;
+              bodyJSON.authed_user['secret_value'] =  secrets.client_secret;
               var params = {
                 SecretId: config.aws_secret_name,
                 SecretString: JSON.stringify(bodyJSON.authed_user)
