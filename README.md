@@ -47,9 +47,9 @@ The scope for the app should be `admin.analytics:read`.
 
 Note: current template is supported for the us-east-1 region only. You can customize the /cloudformation/sample_slack_app_template.yaml file if you need to deploy in a different region. 
         
-4. Follow the instructions in the app to update your redirect URL and install the Athena Federated Query Connector in your AWS account. 
+4. Follow the instructions described in the web app UI to update your redirect URL and install the custom AFQ functions in your AWS account. 
 
-5. Follow [these instruction](https://docs.aws.amazon.com/athena/latest/ug/connect-to-a-data-source-lambda.html)) to register your connector as an Athena Data Source.
+5. Follow [these instruction](https://docs.aws.amazon.com/athena/latest/ug/connect-to-a-data-source-lambda.html) to register your new connector as an Athena Data Source.
 
 6. Query the Slack Member Analytics using Amazon Athena or QuickSight Connector to Athena. 
 
