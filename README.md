@@ -13,6 +13,7 @@ In future releases we plan to make this workflow serverless.
 ## Content
 Here are the contents of this repository:
 
+- [/athena-slack-member-analytics](athena-slack-member-analytics/) - Source code for the AWS Athena Federated Query Connector.
 - [/sam-slackanalyticsapi-simulator](sam-slackanalyticsapi-simulator/) - Use this AWS SAM app to simulate the Slack Member Analytics API using AWS API Gateway and AWS Lambda.
 - [/cloudformation](cloudformation)
     - [sample_slack_app_template.yaml](cloudformation/sample_slack_app_template.yaml) - Sample AWS CloudFormation templates for deploying web app in EC2 
