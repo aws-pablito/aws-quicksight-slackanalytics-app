@@ -80,7 +80,7 @@ router.get('/', function(req, res, next) {
                * TODO - Use the same secret as input so it can be re-used and simplify revoke and re-authorize the application.
                */
               var params = {
-                SecretId: config.aws_secret_name
+                SecretId: config.aws_secret_name,
                 SecretString: JSON.stringify(bodyJSON.authed_user)
               }
               client.putSecretValue(params, function(err, data) {
