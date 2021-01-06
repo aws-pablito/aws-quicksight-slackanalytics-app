@@ -49,7 +49,7 @@ Note: current template is supported for the us-east-1 region only. You can custo
         
 4. Follow the instructions described in the web app UI to update your redirect URL and install the custom AFQ functions in your AWS account. 
 
-5. Follow [these instruction](https://docs.aws.amazon.com/athena/latest/ug/connect-to-a-data-source-lambda.html) to register your new connector as an Athena Data Source.
+5. Register your new connector as an [Athena Data Source](https://docs.aws.amazon.com/athena/latest/ug/connect-to-a-data-source-lambda.html).
 
 6. Query the Slack Member Analytics using Amazon Athena or QuickSight Connector to Athena. 
 
