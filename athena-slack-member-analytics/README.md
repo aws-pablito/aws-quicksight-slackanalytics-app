@@ -1,4 +1,4 @@
-## Example Athena Slack Member Analytics Connector
+## Sample Athena Slack Member Analytics Connector
 
 This connector enables Amazon Athena to communicate with your Slack Member Analytics endpoint via SQL. The Slack Member Analytics API allows customers to access their Slack engagement data. The data is available daily for each member in the organization. Customers can then summarize, filter, and aggregate the data using SQL and analyze via their own business intelligence tools (e.g. AWS QuickSight) and terms (department, role etc), compare Slack engagement to other tools, and integrate Slack data into existing dashboards & business processes.
  
