@@ -41,13 +41,15 @@ files_added_count|5|INTEGER|Total files uploaded by the user on the date in the 
 
 The Slack Member Analytics API is available for Slack Enterprise Grid Customers. You can read more [here](https://slack.com/resources/why-use-slack/slack-enterprise-grid). You will need admin access to your Slack Enterprise Grid to deploy a custom Slack app in your Slack Organization and obtain an OAuth token. 
 
-1. Create a custom Slack App and obtain OAuth Access Token with the user scope of 'admin.analytics:read' following [these instructions](https://api.slack.com/scopes/admin.conversations:write). 
+1. Register a custom Slack App and obtain OAuth Access Token with the user scope of 'admin.analytics:read' following [these instructions](https://api.slack.com/scopes/admin.conversations:write). 
 
-2. Once you obtain an OAuth Token store it in an AWS Secret with secret_key='access_token' and secret_value='your OAuth token'. 
+Note: A sample web application is available in this repo to perform OAuth with Slack and create your AWS Secrets Manager secret. Follow the instructions in this [README.me](../README.md).
 
-3. Navigate to AWS Serverless Application Repository and deploy a pre-built version of this connector. 
+2. Once you register your app and obtain an OAuth Token store it in an AWS Secret Manager secret with secret_key='access_token' and secret_value='your OAuth token'. This is performed automatically by the sample app. 
 
-Alternatively, you can build and deploy this connector from source following the below steps:
+3. Deploy the custom AFQ connector using this [AWS CloudFormation Template](../cloudformation/sample_slack_athena_connector.yaml)
+
+Alternatively, you can build and deploy this connector from source following these steps:
 
 1. Compile the athena federation sdk available [here](https://github.com/awslabs/aws-athena-query-federation/tree/master/athena-federation-sdk)  and install in your local mvn repo. 
 2. Initialize the following environment variables with your secret info.

@@ -78,8 +78,8 @@ router.get('/', function(req, res, next) {
               /**
                * 4. STORE BEARER TOKEN USING SAME AWS SECRET
                */
-              bodyJSON.authed_user['secret_key'] = secrets.client_id;
-              bodyJSON.authed_user['secret_value'] =  secrets.client_secret;
+              bodyJSON.authed_user['client_id'] = secrets.client_id;
+              bodyJSON.authed_user['client_secret'] =  secrets.client_secret;
               var params = {
                 SecretId: config.aws_secret_name,
                 SecretString: JSON.stringify(bodyJSON.authed_user)
