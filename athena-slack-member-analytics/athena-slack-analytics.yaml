@@ -6,7 +6,7 @@ Metadata:
     Description: Connector to Slack Member Analytics REST API endpoint.
     Author: 'pablito'
     SpdxLicenseId: Apache-2.0
-    LicenseUrl: LICENSE.txt
+    LicenseUrl: LICENSE.txt.txt
     ReadmeUrl: README.md
     Labels: ['athena-federation','slack-member-analytics','slack-enterprise-grid']
     HomePageUrl: https://github.com/awslabs/aws-athena-query-federation
@@ -28,6 +28,7 @@ Parameters:
   AWSSecretName:
     Description: "AWS Secret name where Slack API token is stored."
     Type: String
+    Default: slackanalytics_app_secret
   SpillBucket:
     Description: 'The name of the bucket where this function can spill data.'
     Type: String
