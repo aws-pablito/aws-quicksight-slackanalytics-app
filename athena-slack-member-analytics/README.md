@@ -70,3 +70,8 @@ Alternatively, you can build and deploy this connector from source following the
 2. SecretsManager Read Access - The connector will need access to the OAuth token stored in AWS secrets.
 3. CloudWatch Logs - This is a somewhat implicit permission when deploying a Lambda function but it needs access to cloudwatch logs for storing logs.
 4. Athena GetQueryExecution - The connector uses this access to fast-fail when the upstream Athena query has terminated.
+
+## License
+
+Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+[SPDX-License-Identifier: MIT-0](../LICENSE)
