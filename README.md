@@ -59,6 +59,7 @@ To learn more check out AFQ in action [here](https://athena-in-action.workshop.a
 
 ## Version
 - 2020.12.0 - First release
+- 2021.12.1 - Updates to use a single secret.
 
 ## License
 
