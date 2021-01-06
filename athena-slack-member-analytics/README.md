@@ -53,16 +53,16 @@ Alternatively, you can build and deploy this connector from source following the
 
 1. Compile the athena federation sdk available [here](https://github.com/awslabs/aws-athena-query-federation/tree/master/athena-federation-sdk)  and install in your local mvn repo. 
 2. Initialize the following environment variables with your secret info.
-
-```
-    export data_endpoint="https://slack.com/api/admin.analytics.getFile" 
-    export region="<AWS_Region>"
-    export secret_name="<Slack_AWS_Secret_Name>"
-    export test_date="2020-11-10"
-```
+   
+   ```
+       export data_endpoint="https://slack.com/api/admin.analytics.getFile" 
+       export region="<AWS_Region>"
+       export secret_name="<Slack_AWS_Secret_Name>"
+       export test_date="2020-11-10"
+   ```
 
 3. From the athena-slack-member-analytics dir, run `mvn clean install`.
-4. From the athena-slack-member-analytics dir, run  `../tools/publish.sh S3_BUCKET_NAME athena-slack-analytics` to publish the connector to your private AWS Serverless Application Repository. The S3_BUCKET in the command is where a copy of the connector's code will be stored for Serverless Application Repository to retrieve it. This will allow users with permission to do so, the ability to deploy instances of the connector via 1-Click form. Then navigate to [Serverless Application Repository](https://aws.amazon.com/serverless/serverlessrepo)
+4. From the athena-slack-member-analytics dir, run  `./publish.sh S3_BUCKET_NAME athena-slack-analytics` to publish the connector to your private AWS Serverless Application Repository. The S3_BUCKET in the command is where a copy of the connector's code will be stored for Serverless Application Repository to retrieve it. This will allow users with permission to do so, the ability to deploy instances of the connector via 1-Click form. Then navigate to [Serverless Application Repository](https://aws.amazon.com/serverless/serverlessrepo)
 
 ### Required Permissions
 
