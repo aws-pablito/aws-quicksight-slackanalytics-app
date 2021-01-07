@@ -1,33 +1,33 @@
 # aws-quicksight-slackanalytics-app
 
-This repo contains a custom Athena Federated Query (AFQ) connector to query data from the Slack Member Analytics endpoint using SQL. 
+This repo contains two main components: 
+- A custom Athena Federated Query (AFQ) connector to query data from the Slack Member Analytics REST API endpoint using SQL, and 
+- A sample web application to perform OAuth with the Slack Web API and securely store the bearer token in an AWS Secrets Manager secret. 
 
-It also contains a sample web application to perform OAuth with the Slack Web API and securely store the bearer token in 
-an AWS Secrets Manager secret. 
+Supporting AWS CloudFormation templates are available to deploy each of these components. 
 
 Note: The sample web application is only required during the OAuth workflow. For cost control recommend terminating your AWS CloudFormation 
-deployment once the Slack App is authorized with your Slack Enterprise Grid.  If you redeploy the template you will need to update your redirect endpoint from Slack.com
-
-In future releases we plan to make this workflow serverless. 
+Stack once the Slack App is authorized with your Slack Enterprise Grid.  If you redeploy the template you will need to update your redirect endpoint from Slack.com. In future releases we plan to make this workflow serverless. 
 
 ## Content
 Here are the contents of this repository:
 
 - [/athena-slack-member-analytics](athena-slack-member-analytics/) - Source code for the AWS Athena Federated Query Connector.
-- [/sam-slackanalyticsapi-simulator](sam-slackanalyticsapi-simulator/) - Use this AWS SAM app to simulate the Slack Member Analytics API using AWS API Gateway and AWS Lambda.
+- [/sam-slackanalyticsapi-simulator](sam-slackanalyticsapi-simulator/) - An AWS SAM app to simulate the Slack Member Analytics API using AWS API Gateway and AWS Lambda.
 - [/cloudformation](cloudformation)
-    - [sample_slack_app_template.yaml](cloudformation/sample_slack_app_template.yaml) - Sample AWS CloudFormation templates for deploying web app in EC2 
-    - [sample_slack_athena_connector.yaml](cloudformation/sample_slack_athena_connector.yaml) - Sample AWS CloudFormation template for deploying the custom Athena Federated Query Connector for Slack Member Analytics API.
-- [/webapp](webapp/) - The Node.js Express Application
+    - [sample_slack_app_template.yaml](cloudformation/sample_slack_app_template.yaml) - Sample AWS CloudFormation template for deploying the custom web application on EC2. 
+    - [sample_slack_athena_connector.yaml](cloudformation/sample_slack_athena_connector.yaml) - Sample AWS CloudFormation template for deploying the Slack Member Analytics AFQ Connector.
+- [/webapp](webapp/) - The source code for the Node.js application.
 
-## Deploy the Slack Application
+## Deploy the Slack Web Application and AFQ Connector
 
-1. Register a custom Slack App following [these instructions](https://api.slack.com/scopes/admin.analytics:read)
+1. Register a new and custom Slack App following [these instructions](https://api.slack.com/scopes/admin.analytics:read)
 
-Note: In the OAuth and Permissions section, for redirect URL use a placeholder such as "https://not-a-real-domain.com/". 
-The scope for the app should be `admin.analytics:read`.
+Note: In the OAuth and Permissions section, you'll need to specify a redirect URL. Use a placeholder such as "https://not-a-real-domain.com/" to save and obtain the credentials. You will update this redirect URL at a later step. 
 
 2. Create an AWS Secrets Manager secret named "slackanalytics_app_secret" and store your Slack app's client secrets under the  "client_id" and "client_secret" keys. 
+
+![Alt text](/images/secret_preauth.png?raw=true "Secrets Manager Screenshot")
 
 3. Deploy the sample Slack Web App in your AWS account using this AWS CloudFormation template.  
 
