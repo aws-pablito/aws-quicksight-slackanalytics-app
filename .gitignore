@@ -20,4 +20,7 @@ sample.gzip
 # Dependency directories
 node_modules/
 
+# temp templates
+temp.yaml
+
 

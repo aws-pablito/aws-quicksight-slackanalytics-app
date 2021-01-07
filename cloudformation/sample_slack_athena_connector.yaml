@@ -33,6 +33,7 @@ Parameters:
   AWSSecretName:
     Description: AWS Secret name where Slack API token is stored.
     Type: String
+    Default: slackanalytics_app_secret
   SpillBucket:
     Description: Specify the name of an S3 bucket where this function can spill data.
     Type: String
