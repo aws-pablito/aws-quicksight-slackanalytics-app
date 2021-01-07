@@ -18,6 +18,7 @@ Here are the contents of this repository:
     - [sample_slack_app_template.yaml](cloudformation/sample_slack_app_template.yaml) - Sample AWS CloudFormation template for deploying the custom web application on EC2. 
     - [sample_slack_athena_connector.yaml](cloudformation/sample_slack_athena_connector.yaml) - Sample AWS CloudFormation template for deploying the Slack Member Analytics AFQ Connector.
 - [/webapp](webapp/) - The source code for the Node.js application.
+- [/images](images/) - Supporting images for this documentation (README.md).
 
 ## Deploy the Slack Web Application and AFQ Connector
 
