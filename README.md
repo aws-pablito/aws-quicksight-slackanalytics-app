@@ -58,7 +58,7 @@ Note: After authentication your AWS Secrets Manager secret should contain new ke
 
 5. Use the AWS Cloudformation link from the Successfull Authentication UI to deploy your custom AFQ connector in your account. 
 
-![Alt text](/images/landing_success.png?raw=true "WebApp UI Screenshot Post Auth")
+![Alt text](/images/webapp_success.png?raw=true "WebApp UI Screenshot Post Auth")
 
 6. Register your new AWS Lambda function as an [Athena Data Source](https://docs.aws.amazon.com/athena/latest/ug/connect-to-a-data-source-lambda.html).
 
