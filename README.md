@@ -29,7 +29,7 @@ Note: In the OAuth and Permissions section, you'll need to specify a redirect UR
 
 ![Alt text](/images/secret_preauth.png?raw=true "Secrets Manager Screenshot")
 
-3. Deploy the sample Slack Web App in your AWS account using this AWS CloudFormation template.  
+3. Deploy the sample Slack Web App in your AWS account using this AWS CloudFormation template.   
 
     - From the AWS Console:  [Template](https://us-east-1.console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/review?&templateURL=https://s3.us-east-1.amazonaws.com/quicksight.slackanalytics.afqconnector/sample_slack_app_template.yaml&stackName=qs-slackanalytics-web-app)
     
@@ -45,7 +45,7 @@ Note: In the OAuth and Permissions section, you'll need to specify a redirect UR
         --capabilities CAPABILITY_IAM
 ```
 
-Note: current template is supported for the us-east-1 region only. You can customize the /cloudformation/sample_slack_app_template.yaml file if you need to deploy in a different region. 
+Note: current template is supported for the us-east-1 region only and requires a subnet with public internet access to download source from git repo.  You can customize the /cloudformation/sample_slack_app_template.yaml file if you need to deploy with a different configuration. 
         
 4. Follow the instructions described in the web app UI to update your redirect URL and install the custom AFQ functions in your AWS account. 
 
