@@ -47,15 +47,21 @@ Note: In the OAuth and Permissions section, you'll need to specify a redirect UR
 
 Note: current template is supported for the us-east-1 region only and requires a subnet with public internet access to download source from git repo.  You can customize the /cloudformation/sample_slack_app_template.yaml file if you need to deploy with a different configuration. 
         
-4. Follow the instructions described in the web app UI to update your redirect URL and install the custom AFQ functions in your AWS account. 
+4. Follow the instructions described in the web app UI to update your redirect URL, authenticate and install the custom AFQ function in your AWS account. 
 
-5. Register your new connector as an [Athena Data Source](https://docs.aws.amazon.com/athena/latest/ug/connect-to-a-data-source-lambda.html).
+![Alt text](/images/webapp_landing.png?raw=true "WebApp UI Screenshot")
+
+Note: After authentication your AWS Secrets Manager secret should contain new key:value pairs with your authentication info.
+
+![Alt text](/images/secret_postauth.png?raw=true "Secrets Manager Screenshot Post Auth")
+
+5. Register your new AWS Lambda function as an [Athena Data Source](https://docs.aws.amazon.com/athena/latest/ug/connect-to-a-data-source-lambda.html).
 
 6. Query the Slack Member Analytics using Amazon Athena or QuickSight Connector to Athena. 
 
 ## About Athena Federated Query (AFQ)
 
-To learn more check out AFQ in action [here](https://athena-in-action.workshop.aws/60-connector/601-connector-code.html).
+To learn more about AFQ check out the workshop [here](https://athena-in-action.workshop.aws/60-connector/601-connector-code.html).
 
 ## Version
 - 2020.12.0 - First release
